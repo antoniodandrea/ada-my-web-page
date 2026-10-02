@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>AZERTY CRM</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">A</div>
+        <div class="brand-copy">
+          <strong>AZERTY</strong>
+          <span>CRM</span>
+        </div>
+        <button class="icon-btn sidebar-close" id="sidebarClose" aria-label="Close navigation">×</button>
+      </div>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-view="dashboard">
+          <span class="nav-icon">⌂</span><span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-view="contacts">
+          <span class="nav-icon">◎</span><span>Contacts</span><span class="nav-count" id="contactNavCount">8</span>
+        </button>
+        <button class="nav-item" data-view="companies">
+          <span class="nav-icon">▦</span><span>Companies</span>
+        </button>
+        <button class="nav-item" data-view="pipeline">
+          <span class="nav-icon">◇</span><span>Sales pipeline</span><span class="nav-count">12</span>
+        </button>
+        <button class="nav-item" data-view="tasks">
+          <span class="nav-icon">✓</span><span>Tasks</span><span class="nav-count warning" id="taskNavCount">5</span>
+        </button>
+        <button class="nav-item" data-view="activity">
+          <span class="nav-icon">↗</span><span>Activity</span>
+        </button>
+        <button class="nav-item" data-view="genesys">
+          <span class="nav-icon gc-nav-icon">G</span><span>Genesys Desktop</span><span class="nav-count gc-live-badge">LIVE</span>
+        </button>
+
+        <div class="nav-label">Workspace</div>
+        <button class="nav-item" data-view="reports">
+          <span class="nav-icon">▥</span><span>Reports</span>
+        </button>
+        <button class="nav-item" data-view="integrations">
+          <span class="nav-icon">⌘</span><span>Integrations</span>
+        </button>
+        <button class="nav-item" data-view="settings">
+          <span class="nav-icon">⚙</span><span>Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-icon">✦</div>
+        <strong>Upgrade your workflow</strong>
+        <p>Automate follow-ups and keep every deal moving.</p>
+        <button class="ghost-light" id="openAutomation">Explore automation</button>
+      </div>
+
+      <div class="sidebar-user">
+        <div class="avatar avatar-purple">PM</div>
+        <div>
+          <strong>Paul Martin</strong>
+          <span>Sales Manager</span>
+        </div>
+        <button class="user-more" aria-label="User options">•••</button>
+      </div>
+    </aside>
+
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open navigation">☰</button>
+        <div class="global-search">
+          <span>⌕</span>
+          <input id="globalSearch" type="search" placeholder="Search contacts, companies, deals..." />
+          <kbd>⌘ K</kbd>
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn notification-btn" id="notificationBtn" aria-label="Notifications">
+            ♢<span class="notification-dot"></span>
+          </button>
+          <button class="primary-btn" id="quickCreateBtn"><span>＋</span> Quick create</button>
+        </div>
+      </header>
+
+      <div class="content-wrap">
+        <section class="view active" id="dashboard-view">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">Tuesday, 22 July</p>
+              <h1>Good afternoon, Paul</h1>
+              <p>Here is what is happening with your sales team today.</p>
+            </div>
+            <div class="heading-actions">
+              <select class="select-control" id="dashboardPeriod" aria-label="Dashboard period">
+                <option value="month">This month</option>
+                <option value="quarter">This quarter</option>
+                <option value="year">This year</option>
+              </select>
+              <button class="secondary-btn" id="exportDashboard">⇩ Export</button>
+            </div>
+          </div>
+
+          <div class="stat-grid">
+            <article class="stat-card">
+              <div class="stat-card-head"><span class="stat-icon blue">€</span><span class="trend positive">↗ 12.5%</span></div>
+              <span class="stat-label">Total revenue</span>
+              <strong class="stat-value" id="revenueValue">€184,240</strong>
+              <span class="stat-note">vs. €163,750 last month</span>
+            </article>
+            <article class="stat-card">
+              <div class="stat-card-head"><span class="stat-icon purple">◇</span><span class="trend positive">↗ 8.2%</span></div>
+              <span class="stat-label">Open deals</span>
+              <strong class="stat-value" id="openDealsValue">48</strong>
+              <span class="stat-note">€476,800 total pipeline</span>
+            </article>
+            <article class="stat-card">
+              <div class="stat-card-head"><span class="stat-icon green">✓</span><span class="trend positive">↗ 3.1%</span></div>
+              <span class="stat-label">Conversion rate</span>
+              <strong class="stat-value" id="conversionValue">24.8%</strong>
+              <span class="stat-note">12 deals won this month</span>
+            </article>
+            <article class="stat-card">
+              <div class="stat-card-head"><span class="stat-icon orange">◎</span><span class="trend negative">↘ 2.4%</span></div>
+              <span class="stat-label">Average deal cycle</span>
+              <strong class="stat-value" id="cycleValue">31 days</strong>
+              <span class="stat-note">2 days faster than last month</span>
+            </article>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="panel revenue-panel">
+              <div class="panel-header">
+                <div><h2>Revenue overview</h2><p>Closed-won revenue compared with target</p></div>
+                <div class="legend"><span><i class="legend-dot solid"></i>Revenue</span><span><i class="legend-dot pale"></i>Target</span></div>
+              </div>
+              <div class="chart-summary">
+                <strong id="chartRevenue">€184.2k</strong><span class="trend positive">+12.5%</span><span>from last period</span>
+              </div>
+              <div class="bar-chart" id="revenueChart" aria-label="Monthly revenue chart"></div>
+            </article>
+
+            <article class="panel pipeline-summary">
+              <div class="panel-header"><div><h2>Pipeline health</h2><p>Current deal distribution</p></div><button class="text-btn" data-view-link="pipeline">View pipeline →</button></div>
+              <div class="donut-wrap">
+                <div class="donut" id="pipelineDonut"><div><strong>€476.8k</strong><span>Total value</span></div></div>
+                <div class="donut-legend">
+                  <div><span class="dot lead"></span><p><strong>Lead</strong><small>€92.4k · 18 deals</small></p></div>
+                  <div><span class="dot qualified"></span><p><strong>Qualified</strong><small>€134.6k · 12 deals</small></p></div>
+                  <div><span class="dot proposal"></span><p><strong>Proposal</strong><small>€158.8k · 10 deals</small></p></div>
+                  <div><span class="dot negotiation"></span><p><strong>Negotiation</strong><small>€91.0k · 8 deals</small></p></div>
+                </div>
+              </div>
+              <div class="health-score"><div><span>Pipeline coverage</span><strong>3.4×</strong></div><div class="progress"><span style="width: 72%"></span></div><small>Healthy coverage for quarterly target</small></div>
+            </article>
+          </div>
+
+          <div class="dashboard-grid lower-grid">
+            <article class="panel recent-deals-panel">
+              <div class="panel-header"><div><h2>Recent deals</h2><p>Latest opportunities updated by your team</p></div><button class="text-btn" data-view-link="pipeline">View all →</button></div>
+              <div class="table-scroll">
+                <table class="data-table compact">
+                  <thead><tr><th>Deal</th><th>Company</th><th>Stage</th><th>Value</th><th>Close date</th><th>Owner</th></tr></thead>
+                  <tbody id="recentDealsBody"></tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="panel tasks-panel">
+              <div class="panel-header"><div><h2>Tasks due</h2><p>Your priorities for today</p></div><button class="icon-btn subtle" id="addTaskBtn" aria-label="Add task">＋</button></div>
+              <div class="task-list" id="dashboardTaskList"></div>
+              <button class="full-text-btn" data-view-link="tasks">View all tasks</button>
+            </article>
+          </div>
+
+          <div class="dashboard-grid lower-grid">
+            <article class="panel activity-panel">
+              <div class="panel-header"><div><h2>Latest activity</h2><p>Updates across your workspace</p></div><button class="text-btn" data-view-link="activity">View all →</button></div>
+              <div class="timeline" id="activityTimeline"></div>
+            </article>
+            <article class="panel leaderboard-panel">
+              <div class="panel-header"><div><h2>Team leaderboard</h2><p>Closed revenue this month</p></div><button class="icon-btn subtle">⋮</button></div>
+              <div id="leaderboardList" class="leaderboard-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="contacts-view">
+          <div class="page-heading">
+            <div><p class="eyebrow">Relationship management</p><h1>Contacts</h1><p>Manage people, conversations and next steps.</p></div>
+            <button class="primary-btn" id="addContactBtn">＋ Add contact</button>
+          </div>
+          <div class="toolbar panel-like">
+            <div class="search-control"><span>⌕</span><input id="contactSearch" type="search" placeholder="Search contacts" /></div>
+            <select class="select-control" id="contactStatusFilter"><option value="all">All statuses</option><option value="Customer">Customer</option><option value="Prospect">Prospect</option><option value="Lead">Lead</option></select>
+            <select class="select-control" id="contactOwnerFilter"><option value="all">All owners</option><option value="Paul Martin">Paul Martin</option><option value="Sophie Bernard">Sophie Bernard</option><option value="Liam Dubois">Liam Dubois</option></select>
+            <button class="secondary-btn" id="clearContactFilters">Clear filters</button>
+          </div>
+          <article class="panel table-panel">
+            <div class="bulk-bar hidden" id="contactBulkBar"><strong id="selectedContactCount">0 selected</strong><button class="secondary-btn" id="emailSelected">Email</button><button class="secondary-btn danger-outline" id="deleteSelected">Delete</button></div>
+            <div class="table-scroll">
+              <table class="data-table">
+                <thead><tr><th><input type="checkbox" id="selectAllContacts" aria-label="Select all contacts" /></th><th data-sort="name">Contact ↕</th><th data-sort="company">Company ↕</th><th>Status</th><th>Email</th><th>Phone</th><th>Owner</th><th>Last activity</th><th></th></tr></thead>
+                <tbody id="contactsTableBody"></tbody>
+              </table>
+            </div>
+            <div class="table-footer"><span id="contactResultCount">Showing 8 contacts</span><div class="pagination"><button disabled>‹</button><button class="active">1</button><button disabled>›</button></div></div>
+          </article>
+        </section>
+
+        <section class="view" id="companies-view">
+          <div class="page-heading">
+            <div><p class="eyebrow">Account management</p><h1>Companies</h1><p>Track key accounts, value and relationship health.</p></div>
+            <button class="primary-btn" id="addCompanyBtn">＋ Add company</button>
+          </div>
+          <div class="company-grid" id="companyGrid"></div>
+        </section>
+
+        <section class="view" id="pipeline-view">
+          <div class="page-heading">
+            <div><p class="eyebrow">Revenue operations</p><h1>Sales pipeline</h1><p>Move opportunities through each stage. Yes, the cards actually move.</p></div>
+            <div class="heading-actions"><select class="select-control" id="pipelineOwnerFilter"><option value="all">All owners</option><option>Paul Martin</option><option>Sophie Bernard</option><option>Liam Dubois</option></select><button class="primary-btn" id="addDealBtn">＋ Add deal</button></div>
+          </div>
+          <div class="pipeline-summary-strip" id="pipelineSummaryStrip"></div>
+          <div class="kanban-board" id="kanbanBoard"></div>
+        </section>
+
+        <section class="view" id="tasks-view">
+          <div class="page-heading">
+            <div><p class="eyebrow">Personal productivity</p><h1>Tasks</h1><p>Calls, follow-ups and reminders in one mildly judgmental list.</p></div>
+            <button class="primary-btn" id="addTaskPageBtn">＋ Add task</button>
+          </div>
+          <div class="task-page-grid">
+            <article class="panel task-main-panel">
+              <div class="task-tabs" id="taskTabs"><button class="active" data-task-filter="all">All</button><button data-task-filter="today">Today</button><button data-task-filter="upcoming">Upcoming</button><button data-task-filter="completed">Completed</button></div>
+              <div class="task-page-list" id="taskPageList"></div>
+            </article>
+            <aside class="panel task-sidebar">
+              <h2>Task summary</h2>
+              <div class="mini-stat"><span>Due today</span><strong id="dueTodayCount">0</strong></div>
+              <div class="mini-stat"><span>Upcoming</span><strong id="upcomingCount">0</strong></div>
+              <div class="mini-stat"><span>Completed</span><strong id="completedCount">0</strong></div>
+              <div class="productivity-card"><span>Weekly completion</span><strong id="weeklyCompletion">72%</strong><div class="progress"><span style="width:72%"></span></div><p>18 of 25 tasks completed</p></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="activity-view">
+          <div class="page-heading"><div><p class="eyebrow">Workspace history</p><h1>Activity feed</h1><p>A chronological record of every customer touchpoint.</p></div><button class="secondary-btn" id="logActivityBtn">＋ Log activity</button></div>
+          <article class="panel activity-feed-panel">
+            <div class="activity-filters"><button class="active" data-activity-filter="all">All activity</button><button data-activity-filter="deal">Deals</button><button data-activity-filter="contact">Contacts</button><button data-activity-filter="task">Tasks</button></div>
+            <div class="timeline large" id="fullActivityTimeline"></div>
+          </article>
+        </section>
+
+        <section class="view" id="reports-view">
+          <div class="page-heading"><div><p class="eyebrow">Analytics</p><h1>Reports</h1><p>Turn activity into decisions instead of another spreadsheet nobody opens.</p></div><button class="primary-btn" id="createReportBtn">＋ Create report</button></div>
+          <div class="report-grid">
+            <article class="panel report-card"><span class="report-icon">▥</span><h2>Sales performance</h2><p>Revenue, target attainment and rep productivity.</p><div class="report-preview bars"><i></i><i></i><i></i><i></i><i></i></div><button class="secondary-btn report-open" data-report="Sales performance">Open report</button></article>
+            <article class="panel report-card"><span class="report-icon">◎</span><h2>Conversion funnel</h2><p>Stage-to-stage conversion and drop-off analysis.</p><div class="report-preview funnel"><i></i><i></i><i></i><i></i></div><button class="secondary-btn report-open" data-report="Conversion funnel">Open report</button></article>
+            <article class="panel report-card"><span class="report-icon">◇</span><h2>Pipeline forecast</h2><p>Weighted forecast by month, stage and owner.</p><div class="report-preview line"><svg viewBox="0 0 200 60"><polyline points="0,50 35,35 70,42 110,20 145,28 200,5" /></svg></div><button class="secondary-btn report-open" data-report="Pipeline forecast">Open report</button></article>
+          </div>
+        </section>
+
+
+        <section class="view" id="genesys-view">
+          <div class="page-heading gc-page-heading">
+            <div>
+              <p class="eyebrow">Contact centre workspace</p>
+              <h1>Genesys Cloud Composable Desktop</h1>
+              <p>Real Genesys Cloud Copilot, Scripts and ACW components embedded directly in AZERTY CRM.</p>
+            </div>
+            <div class="heading-actions">
+              <button class="secondary-btn" id="gcConfigToggle" type="button" aria-expanded="false">⚙ Configuration</button>
+              <button class="primary-btn" id="gcConnectButton" type="button">Initialize Genesys components</button>
+            </div>
+          </div>
+
+          <div class="gc-alert warning" id="gcProtocolWarning" hidden>
+            <span>!</span>
+            <div><strong>HTTPS is required for the production integration.</strong><p>Serve AZERTY CRM from an HTTPS origin before testing cross-origin broker messaging and authentication.</p></div>
+          </div>
+
+          <div class="gc-alert info">
+            <span>G</span>
+            <div><strong>This page hosts the actual Genesys Cloud component iframes.</strong><p>The component ID may be chosen by you, but the component name must be approved for your Composable Desktop onboarding. The agent must also have access to the selected Genesys Cloud organization and relevant product features.</p></div>
+          </div>
+
+          <article class="panel gc-config-panel" id="gcConfigPanel" hidden>
+            <div class="panel-header">
+              <div><h2>Genesys Cloud connection</h2><p>These values are saved locally in this browser and contain no client secret or access token.</p></div>
+              <span class="gc-config-source">genesys-config.js + browser override</span>
+            </div>
+            <form id="gcConfigForm" class="form-grid gc-config-form">
+              <label class="form-full">Genesys Cloud apps domain
+                <input name="deploymentDomain" required placeholder="apps.mypurecloud.ie" autocomplete="off" />
+                <small>Use the <code>apps</code> domain for the region hosting your organization, without a path.</small>
+              </label>
+              <label>Component ID
+                <input name="componentId" required placeholder="azerty-crm-001" autocomplete="off" />
+                <small>A stable UUID or slug chosen for this integration.</small>
+              </label>
+              <label>Approved component name
+                <input name="componentName" required placeholder="AZERTY_CRM" autocomplete="off" />
+                <small>Must match the name approved during onboarding.</small>
+              </label>
+              <label>Locale
+                <input name="locale" required value="en" placeholder="en" autocomplete="off" />
+              </label>
+              <label>Scripter scope ID
+                <input name="scripterScope" required placeholder="azerty-crm-scripter" autocomplete="off" />
+              </label>
+              <label>ACW scope ID
+                <input name="acwScope" required placeholder="azerty-crm-acw" autocomplete="off" />
+              </label>
+              <div class="form-full gc-toggle-grid">
+                <label class="gc-check-option"><input name="autoLoadInteraction" type="checkbox" checked /><span><strong>Auto-load pending interaction</strong><small>Send a queued interaction after registration and authentication.</small></span></label>
+                <label class="gc-check-option"><input name="showBrokerUi" type="checkbox" /><span><strong>Show broker diagnostics</strong><small>Display the small broker status iframe for troubleshooting.</small></span></label>
+              </div>
+              <div class="form-full gc-config-actions">
+                <button class="secondary-btn danger-outline" id="gcConfigReset" type="button">Reset browser configuration</button>
+                <button class="primary-btn" type="submit">Save and initialize</button>
+              </div>
+            </form>
+          </article>
+
+          <div class="gc-status-grid" aria-label="Genesys connection status">
+            <div class="gc-status-card"><span>Broker</span><div class="gc-status-chip idle" id="gcBrokerStatus"><i></i><span>Not started</span></div></div>
+            <div class="gc-status-card"><span>Registration</span><div class="gc-status-chip idle" id="gcRegistrationStatus"><i></i><span>Not registered</span></div></div>
+            <div class="gc-status-card"><span>Authentication</span><div class="gc-status-chip idle" id="gcAuthenticationStatus"><i></i><span>Not authenticated</span></div></div>
+            <div class="gc-status-card"><span>Real-time channel</span><div class="gc-status-chip idle" id="gcSocketStatus"><i></i><span>WebSocket unavailable</span></div></div>
+          </div>
+
+          <article class="panel gc-interaction-panel">
+            <div class="gc-interaction-copy">
+              <span class="gc-section-kicker">Interaction context</span>
+              <h2>Load an active Genesys Cloud interaction</h2>
+              <p>Provide the conversation/interaction identifier that the embedded components must render.</p>
+            </div>
+            <div class="gc-interaction-controls">
+              <label class="gc-interaction-input"><span>Interaction ID</span><input id="gcInteractionId" placeholder="c4154c34-9e65-4e7e-a7e6-fa96da48284b" autocomplete="off" /></label>
+              <button class="primary-btn" id="gcLoadAll" type="button">Load in all components</button>
+            </div>
+            <div class="gc-target-buttons">
+              <button class="secondary-btn" id="gcLoadCopilot" type="button">Send to Copilot</button>
+              <button class="secondary-btn" id="gcLoadScripter" type="button">Send to Scripts</button>
+              <button class="secondary-btn" id="gcLoadAcw" type="button">Send to ACW</button>
+              <button class="secondary-btn" id="gcSetLocale" type="button">Apply locale</button>
+              <button class="secondary-btn" id="gcGetStatus" type="button">Refresh status</button>
+            </div>
+            <div class="gc-runtime-meta">
+              <span><small>Host</small><strong id="gcHostDomain">Not initialized</strong></span>
+              <span><small>Current interaction</small><strong id="gcCurrentInteraction">No interaction loaded</strong></span>
+              <span><small>Component locale</small><strong id="gcLocaleFeedback">Locale not applied</strong></span>
+            </div>
+          </article>
+
+          <iframe id="gcBroker" class="gc-broker-frame" title="Genesys Cloud Composable Desktop broker" style="display:none"></iframe>
+
+          <div class="gc-component-layout">
+            <article class="panel gc-component-card gc-copilot-card">
+              <div class="gc-component-header">
+                <div><span class="gc-component-icon">✦</span><div><h2>Agent Copilot</h2><p>Default scope</p></div></div>
+                <span class="gc-real-label">Genesys Cloud</span>
+              </div>
+              <div class="gc-component-shell loading">
+                <div class="gc-frame-placeholder"><span class="gc-spinner"></span><strong>Waiting for Genesys Cloud</strong><p>Configure and initialize the broker to load Copilot.</p></div>
+                <iframe id="gcCopilotFrame" title="Genesys Cloud Agent Copilot component" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              </div>
+            </article>
+
+            <div class="gc-side-components">
+              <article class="panel gc-component-card">
+                <div class="gc-component-header">
+                  <div><span class="gc-component-icon script">S</span><div><h2>Scripts</h2><p>Embedded scope</p></div></div>
+                  <span class="gc-real-label">Genesys Cloud</span>
+                </div>
+                <div class="gc-component-shell loading compact">
+                  <div class="gc-frame-placeholder"><span class="gc-spinner"></span><strong>Waiting for Genesys Cloud</strong><p>The assigned interaction script appears here.</p></div>
+                  <iframe id="gcScripterFrame" title="Genesys Cloud Scripts component" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                </div>
+              </article>
+
+              <article class="panel gc-component-card">
+                <div class="gc-component-header">
+                  <div><span class="gc-component-icon acw">✓</span><div><h2>After Call Work</h2><p>Embedded scope</p></div></div>
+                  <span class="gc-real-label">Genesys Cloud</span>
+                </div>
+                <div class="gc-component-shell loading compact">
+                  <div class="gc-frame-placeholder"><span class="gc-spinner"></span><strong>Waiting for Genesys Cloud</strong><p>Wrap-up controls appear when the interaction reaches ACW.</p></div>
+                  <iframe id="gcAcwFrame" title="Genesys Cloud After Call Work component" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <article class="panel gc-log-panel">
+            <div class="panel-header"><div><h2>Composable Desktop message log</h2><p>Registration, status, locale and interaction messages exchanged with the broker.</p></div><button class="text-btn" id="gcClearLog" type="button">Clear log</button></div>
+            <div class="gc-event-log" id="gcEventLog" aria-live="polite"></div>
+          </article>
+        </section>
+
+        <section class="view" id="integrations-view">
+          <div class="page-heading"><div><p class="eyebrow">Connected tools</p><h1>Integrations</h1><p>Connect the services your team already tolerates using.</p></div></div>
+          <div class="integration-grid" id="integrationGrid"></div>
+        </section>
+
+        <section class="view" id="settings-view">
+          <div class="page-heading"><div><p class="eyebrow">Workspace administration</p><h1>Settings</h1><p>Configure your pretend organisation with suspiciously real controls.</p></div></div>
+          <div class="settings-layout">
+            <aside class="settings-nav panel"><button class="active" data-settings-tab="general">General</button><button data-settings-tab="notifications">Notifications</button><button data-settings-tab="pipeline">Pipeline</button><button data-settings-tab="team">Team</button></aside>
+            <article class="panel settings-panel">
+              <div class="settings-tab active" id="settings-general">
+                <h2>Workspace details</h2><p>Update your CRM identity and regional preferences.</p>
+                <form id="workspaceForm" class="form-grid"><label>Workspace name<input value="AZERTY CRM" /></label><label>Industry<select><option>Technology</option><option>Professional services</option><option>Healthcare</option></select></label><label>Timezone<select><option>Europe/Paris</option><option>Europe/London</option><option>America/New_York</option></select></label><label>Currency<select><option>EUR (€)</option><option>USD ($)</option><option>GBP (£)</option></select></label><label class="form-full">Company address<textarea>12 avenue des Champs, 75008 Paris, France</textarea></label><div class="form-full"><button class="primary-btn" type="submit">Save changes</button></div></form>
+              </div>
+              <div class="settings-tab" id="settings-notifications"><h2>Notifications</h2><p>Choose which events deserve to interrupt your day.</p><div class="toggle-list" id="notificationSettings"></div></div>
+              <div class="settings-tab" id="settings-pipeline"><h2>Pipeline stages</h2><p>Configure the stages used by your sales team.</p><div class="stage-settings" id="stageSettings"></div></div>
+              <div class="settings-tab" id="settings-team"><h2>Team members</h2><p>Manage users and workspace roles.</p><div class="team-list" id="teamSettings"></div></div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="dropdown-panel notifications-panel" id="notificationsPanel">
+    <div class="dropdown-header"><h3>Notifications</h3><button class="text-btn" id="markAllRead">Mark all read</button></div>
+    <div id="notificationList"></div>
+  </div>
+
+  <div class="dropdown-panel quick-create-panel" id="quickCreatePanel">
+    <button data-quick-action="contact"><span class="quick-icon blue">◎</span><div><strong>New contact</strong><small>Add a person to your CRM</small></div></button>
+    <button data-quick-action="deal"><span class="quick-icon purple">◇</span><div><strong>New deal</strong><small>Create a sales opportunity</small></div></button>
+    <button data-quick-action="task"><span class="quick-icon green">✓</span><div><strong>New task</strong><small>Schedule a follow-up</small></div></button>
+    <button data-quick-action="activity"><span class="quick-icon orange">↗</span><div><strong>Log activity</strong><small>Record a customer interaction</small></div></button>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header"><div><span class="modal-kicker" id="modalKicker">Create</span><h2 id="modalTitle">New record</h2></div><button class="icon-btn" id="modalClose" aria-label="Close modal">×</button></div>
+      <form id="modalForm"><div class="modal-body" id="modalBody"></div><div class="modal-footer"><button type="button" class="secondary-btn" id="modalCancel">Cancel</button><button type="submit" class="primary-btn" id="modalSubmit">Save</button></div></form>
+    </div>
+  </div>
+
+  <template id="contactFormTemplate">
+    <div class="form-grid">
+      <label>First name<input name="firstName" required placeholder="Camille" /></label>
+      <label>Last name<input name="lastName" required placeholder="Rousseau" /></label>
+      <label>Email<input name="email" type="email" required placeholder="camille@example.com" /></label>
+      <label>Phone<input name="phone" placeholder="+33 6 12 34 56 78" /></label>
+      <label>Company<input name="company" placeholder="Acme Europe" /></label>
+      <label>Status<select name="status"><option>Lead</option><option>Prospect</option><option>Customer</option></select></label>
+      <label class="form-full">Owner<select name="owner"><option>Paul Martin</option><option>Sophie Bernard</option><option>Liam Dubois</option></select></label>
+    </div>
+  </template>
+
+  <template id="dealFormTemplate">
+    <div class="form-grid">
+      <label class="form-full">Deal name<input name="name" required placeholder="Enterprise expansion" /></label>
+      <label>Company<input name="company" required placeholder="Acme Europe" /></label>
+      <label>Value (€)<input name="value" type="number" min="0" required placeholder="25000" /></label>
+      <label>Stage<select name="stage"><option value="lead">Lead</option><option value="qualified">Qualified</option><option value="proposal">Proposal</option><option value="negotiation">Negotiation</option></select></label>
+      <label>Close date<input name="closeDate" type="date" required /></label>
+      <label class="form-full">Owner<select name="owner"><option>Paul Martin</option><option>Sophie Bernard</option><option>Liam Dubois</option></select></label>
+    </div>
+  </template>
+
+  <template id="taskFormTemplate">
+    <div class="form-grid">
+      <label class="form-full">Task title<input name="title" required placeholder="Follow up on proposal" /></label>
+      <label>Type<select name="type"><option>Call</option><option>Email</option><option>Meeting</option><option>To-do</option></select></label>
+      <label>Priority<select name="priority"><option>Normal</option><option>High</option><option>Low</option></select></label>
+      <label>Due date<input name="dueDate" type="date" required /></label>
+      <label>Related to<input name="related" placeholder="Company or deal" /></label>
+      <label class="form-full">Owner<select name="owner"><option>Paul Martin</option><option>Sophie Bernard</option><option>Liam Dubois</option></select></label>
+    </div>
+  </template>
+
+  <template id="companyFormTemplate">
+    <div class="form-grid">
+      <label class="form-full">Company name<input name="name" required placeholder="Acme Europe" /></label>
+      <label>Industry<input name="industry" placeholder="Technology" /></label>
+      <label>Website<input name="website" placeholder="acme.example" /></label>
+      <label>Employees<input name="employees" type="number" min="1" placeholder="250" /></label>
+      <label>Account owner<select name="owner"><option>Paul Martin</option><option>Sophie Bernard</option><option>Liam Dubois</option></select></label>
+    </div>
+  </template>
+
+  <template id="activityFormTemplate">
+    <div class="form-grid">
+      <label>Activity type<select name="type"><option>Call</option><option>Email</option><option>Meeting</option><option>Note</option></select></label>
+      <label>Related record<input name="related" required placeholder="Company, contact or deal" /></label>
+      <label class="form-full">Summary<textarea name="summary" required placeholder="Describe what happened and the next step"></textarea></label>
+    </div>
+  </template>
+
+  <script src="genesys-config.js"></script>
+  <script src="app.js"></script>
+  <script src="genesys-composable-desktop.js"></script>
+</body>
+</html>
